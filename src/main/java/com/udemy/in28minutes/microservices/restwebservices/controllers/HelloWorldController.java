@@ -1,6 +1,9 @@
 package com.udemy.in28minutes.microservices.restwebservices.controllers;
 
 import com.udemy.in28minutes.microservices.restwebservices.beans.HelloWorldBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,10 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloWorldController {
 
+  @Autowired
+  private MessageSource messageSource;
+
   // string hello-world
   @GetMapping("/hello-world")
   public String helloWorld() {
     return "Hello World";
+  }
+
+  // internationalized good-morning
+  @GetMapping("/good-morning")
+  public String goodMorning() {
+    return messageSource.getMessage("good.morning", null, LocaleContextHolder.getLocale());
   }
 
   // bean hello-world with param name

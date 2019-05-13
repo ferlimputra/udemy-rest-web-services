@@ -2,6 +2,9 @@ package com.udemy.in28minutes.microservices.restwebservices.beans;
 
 import java.util.Date;
 import java.util.UUID;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 /**
  * User
@@ -9,7 +12,13 @@ import java.util.UUID;
 public class UserBean {
 
   private UUID id;
+
+  @Size(min = 2, message = "Name must be at least two characters")
+  @NotNull(message = "Name cannot be null")
   private String username;
+
+  @Past(message = "Date of Birth is not valid")
+  @NotNull(message = "Date of Birth cannot be null")
   private Date dateOfBirth;
 
   public UserBean(String username, Date dateOfBirth) {

@@ -1,4 +1,9 @@
 logging:
   level:
-    org.springframework:
-      debug
+    org.springframework: debug
+
+spring:
+  mvc:
+    locale: us
+  messages:
+    basename: messages
