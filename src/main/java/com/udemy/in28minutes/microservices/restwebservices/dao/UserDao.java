@@ -18,7 +18,7 @@ public class UserDao {
   static {
     users.add(new UserBean("Adam", new Date()));
     users.add(new UserBean("Eve", new Date()));
-    users.add(new UserBean("Adam", new Date()));
+    users.add(new UserBean("Abel", new Date()));
   }
 
   public List<UserBean> getUsers() {

@@ -1,6 +1,14 @@
-logging:
-  level:
-    org.springframework: debug
+server:
+  port: 8080
+
+management:
+  server:
+    port: 9001
+  endpoints:
+    web:
+      exposure:
+        include:
+        - '*'
 
 spring:
   mvc:

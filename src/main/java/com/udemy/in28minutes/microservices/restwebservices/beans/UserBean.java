@@ -5,20 +5,27 @@ import java.util.UUID;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * User
  */
+@ApiModel(description = "Represent a user.")
+// @JsonFilter("userFilter")
 public class UserBean {
 
   private UUID id;
 
   @Size(min = 2, message = "Name must be at least two characters")
   @NotNull(message = "Name cannot be null")
+  @ApiModelProperty(example = "John", required = true,
+      value = "Name of the user. Name must be at least two characters.")
   private String username;
 
-  @Past(message = "Date of Birth is not valid")
+  @Past(message = "Date of Birth should be in the past")
   @NotNull(message = "Date of Birth cannot be null")
+  @ApiModelProperty(value = "Date of Birth should be in the past")
   private Date dateOfBirth;
 
   public UserBean(String username, Date dateOfBirth) {

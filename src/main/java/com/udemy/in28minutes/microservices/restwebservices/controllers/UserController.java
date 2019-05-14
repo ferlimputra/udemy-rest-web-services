@@ -35,6 +35,16 @@ public class UserController {
     return userDao.getUsers();
   }
 
+  @GetMapping(value = "/users", params = "version=2")
+  public String getUsersV2() {
+    return "param versioning";
+  }
+
+  @GetMapping(value = "/users", headers = "X-API-VERSION=2")
+  public String getUsersV2Header() {
+    return "header param versioning";
+  }
+
   // get user by name
   @GetMapping("/users/{username}")
   public Resource<UserBean> getUser(@PathVariable String username) {
