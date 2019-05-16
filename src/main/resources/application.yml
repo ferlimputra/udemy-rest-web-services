@@ -11,7 +11,16 @@ management:
         - '*'
 
 spring:
+  jpa:
+    show-sql: true
   mvc:
     locale: us
   messages:
     basename: messages
+  security:
+    user:
+      name: user
+      password: P@ssword123
+  h2:
+    console:
+      enabled: true

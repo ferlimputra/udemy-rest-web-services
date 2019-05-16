@@ -1,17 +1,17 @@
-package com.udemy.in28minutes.microservices.restwebservices.dao;
+package com.udemy.in28minutes.microservices.restwebservices.services;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import com.udemy.in28minutes.microservices.restwebservices.beans.UserBean;
 import com.udemy.in28minutes.microservices.restwebservices.system.exceptions.UserAlreadyExistsException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * UserDao
  */
-@Component
-public class UserDao {
+@Service
+public class UserService {
 
   private static List<UserBean> users = new ArrayList<>();
 

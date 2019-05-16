@@ -6,7 +6,7 @@ import java.net.URI;
 import java.util.List;
 import javax.validation.Valid;
 import com.udemy.in28minutes.microservices.restwebservices.beans.UserBean;
-import com.udemy.in28minutes.microservices.restwebservices.dao.UserDao;
+import com.udemy.in28minutes.microservices.restwebservices.services.UserService;
 import com.udemy.in28minutes.microservices.restwebservices.system.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
@@ -27,12 +27,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class UserController {
 
   @Autowired
-  private UserDao userDao;
+  private UserService userService;
 
   // get all users
   @GetMapping("/users")
   public List<UserBean> getUsers() {
-    return userDao.getUsers();
+    return userService.getUsers();
   }
 
   @GetMapping(value = "/users", params = "version=2")
@@ -48,7 +48,7 @@ public class UserController {
   // get user by name
   @GetMapping("/users/{username}")
   public Resource<UserBean> getUser(@PathVariable String username) {
-    UserBean user = userDao.getUser(username);
+    UserBean user = userService.getUser(username);
     if (user == null) {
       throw new UserNotFoundException(String.format("Username %s does not exists.", username));
     }
@@ -63,7 +63,7 @@ public class UserController {
   // delete user by name
   @DeleteMapping("/users/{username}")
   public void deleteUser(@PathVariable String username) {
-    boolean result = userDao.deleteUser(username);
+    boolean result = userService.deleteUser(username);
     if (!result) {
       throw new UserNotFoundException(String.format("Username %s does not exists.", username));
     }
@@ -72,7 +72,7 @@ public class UserController {
   // save new user
   @PostMapping("/users")
   public ResponseEntity<Object> createUser(@Valid @RequestBody UserBean user) {
-    UserBean newUser = userDao.save(user);
+    UserBean newUser = userService.save(user);
     URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{name}")
         .buildAndExpand(newUser.getUsername()).toUri();
     return ResponseEntity.created(location).build();

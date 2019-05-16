@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.udemy.in28minutes.microservices.restwebservices.beans.UserBean;
-import com.udemy.in28minutes.microservices.restwebservices.dao.UserDao;
+import com.udemy.in28minutes.microservices.restwebservices.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class FilteringController {
 
   @Autowired
-  private UserDao userDao;
+  private UserService userService;
 
   private SimpleFilterProvider createFilter(String filterName, String... properties) {
     SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.serializeAllExcept(properties);
@@ -36,13 +36,13 @@ public class FilteringController {
 
   @GetMapping("/filtered-user/{username}")
   public MappingJacksonValue getFilteredUser(@PathVariable String username) {
-    UserBean user = userDao.getUser(username);
+    UserBean user = userService.getUser(username);
     return filter(user, createFilter("userFilter", "id"));
   }
 
   @GetMapping("/filtered-user")
   public MappingJacksonValue getUsernames() {
-    List<UserBean> users = userDao.getUsers();
+    List<UserBean> users = userService.getUsers();
     return filter(users, createFilter("userFilter", "id", "dateOfBirth"));
   }
 
